@@ -1,0 +1,96 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Description": "Part 2 of your first ec2 deployment. In this we add a security group and give us the ability to ssh to our ec2 instance",
+    "Metadata": {
+        "AWS::CloudFormation::Designer": {
+            "bcfc91df-8a63-4228-adc5-6a3aab66d4c7": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": 510,
+                    "y": 180
+                },
+                "z": 1,
+                "embeds": [],
+                "isassociatedwith": [
+                    "5f20f8e1-be57-4ed8-bf1f-6d4a44490f0a"
+                ]
+            },
+            "5f20f8e1-be57-4ed8-bf1f-6d4a44490f0a": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": 360,
+                    "y": 180
+                },
+                "z": 1,
+                "embeds": [],
+                "iscontainedinside": [
+                    "vpc-fdeed695"
+                ]
+            }
+        }
+    },
+    "Parameters": {
+        "KeyName": {
+            "Description": "When we launch our stack, an option will appear under parameters to let us specify a key pair",
+            "Type": "String"
+        }
+    },
+    "Resources": {
+        "myec2instance": {
+            "Type": "AWS::EC2::Instance",
+            "Description": "A Linux t2.mirco EC2 instance will be deployed in us-east-2a. For this part, we attach the webDMZ security policy and attach a key to the instance, which is referenced by KeyName in the parameters section",
+            "Properties": {
+                "InstanceType": "t2.micro",
+                "AvailabilityZone": "us-east-2a",
+                "SecurityGroupIds": [
+                    "webDMZ"
+                ],
+                "KeyName": {
+                    "Ref": "KeyName"
+                },
+                "ImageId": "ami-0d8f6eb4f641ef691"
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "bcfc91df-8a63-4228-adc5-6a3aab66d4c7"
+                }
+            }
+        },
+        "webDMZ": {
+            "Type": "AWS::EC2::SecurityGroup",
+			"Description" : "Create a SG that allows ssh from anywhere",
+            "Properties": {
+                "GroupName" : "webDMZ",
+                "GroupDescription": "Allow ssh to myec2instance",
+                "VpcId": "vpc-fdeed695",
+                "SecurityGroupIngress": [
+                    {
+                        "IpProtocol": "tcp",
+                        "FromPort": "22",
+                        "ToPort": "22",
+                        "CidrIp": "0.0.0.0/0"
+                    }
+                ],
+                "SecurityGroupEgress": [
+                    {
+                        "IpProtocol": "tcp",
+                        "FromPort": "22",
+                        "ToPort": "22",
+                        "CidrIp": "0.0.0.0/0"
+                    }
+                ]
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "5f20f8e1-be57-4ed8-bf1f-6d4a44490f0a"
+                }
+            }
+        }
+    }
+}
