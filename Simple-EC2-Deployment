@@ -1,0 +1,34 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Metadata": {
+        "AWS::CloudFormation::Designer": {
+            "bcfc91df-8a63-4228-adc5-6a3aab66d4c7": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": 523,
+                    "y": 189
+                },
+                "z": 0,
+                "embeds": []
+            }
+        }
+    },
+    "Resources": {
+        "EC2I274US": {
+            "Type": "AWS::EC2::Instance",
+            "Properties": {
+                "InstanceType": "t2.micro",
+                "AvailabilityZone": "us-east-2a",
+                "ImageId": "ami-0d8f6eb4f641ef691"
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "bcfc91df-8a63-4228-adc5-6a3aab66d4c7"
+                }
+            }
+        }
+    }
+}
